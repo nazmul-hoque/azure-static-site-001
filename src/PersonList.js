@@ -1,24 +1,24 @@
 import React from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import API from './api'
 
-export default  PersonList  {
-  state = {
-    persons: []
-  }
-
- 
-  axios.get(`https://jsonplaceholder.typicode.com/users`)
+function PersonList() {
+  const [persons, setPersons]=useState([]);
+  
+  useEffect(()=>{
+    API.get(`users`)
     .then(res => {
       const persons = res.data;
-      this.setState({ persons });
+      setPersons( persons );
     })
-
-
+  },[])
+  
 
   return (
     <ul>
       {
-        this.state.persons
+        persons
           .map(person =>
             <li key={person.id}>{person.name}</li>
           )
@@ -27,3 +27,5 @@ export default  PersonList  {
   )
 
 }
+
+export default PersonList
